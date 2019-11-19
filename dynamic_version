@@ -1,0 +1,111 @@
+{
+  "appConfig": {},
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "admin",
+  "limitConcurrent": true,
+  "parameterConfig": [
+    {
+      "default": "1.11.13-alpine",
+      "description": "",
+      "hasOptions": false,
+      "label": "",
+      "name": "testVar",
+      "options": [
+        {
+          "value": "1.11.13-alpine"
+        },
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": false
+    }
+  ],
+  "stages": [
+    {
+      "clusters": [
+        {
+          "account": "clouddriver-ecs",
+          "application": "reinvent2019",
+          "associatePublicIpAddress": true,
+          "availabilityZones": {
+            "us-east-1": [
+              "us-east-1a",
+              "us-east-1b",
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1e",
+              "us-east-1f"
+            ]
+          },
+          "capacity": {
+            "desired": 1,
+            "max": 3,
+            "min": 1
+          },
+          "cloudProvider": "ecs",
+          "computeUnits": 256,
+          "containerPort": 80,
+          "copySourceScalingPoliciesAndActions": false,
+          "dockerImageCredentialsSecret": "None (No registry credentials)",
+          "dockerLabels": {},
+          "ecsClusterName": "reinvent2019-deployments",
+          "environmentVariables": {},
+          "healthCheckGracePeriodSeconds": "",
+          "healthCheckType": "EC2",
+          "iamRole": "None (No IAM role)",
+          "imageDescription": {
+            "account": "dockerhub",
+            "imageId": "index.docker.io/library/nginx",
+            "registry": "index.docker.io",
+            "repository": "library/nginx",
+            "tag": "${testVar}"
+          },
+          "launchType": "FARGATE",
+          "loadBalancers": [],
+          "moniker": {
+            "app": "reinvent2019",
+            "stack": "nginx"
+          },
+          "networkMode": "awsvpc",
+          "placementConstraints": [],
+          "placementStrategyName": "",
+          "placementStrategySequence": [],
+          "provider": "ecs",
+          "reservedMemory": 512,
+          "securityGroupNames": [
+            "default"
+          ],
+          "securityGroups": [],
+          "serviceDiscoveryAssociations": [],
+          "stack": "nginx",
+          "strategy": "highlander",
+          "subnetType": "demo",
+          "tags": {},
+          "targetGroup": "demo-ecscanary-tg",
+          "taskDefinitionArtifact": {},
+          "useSourceCapacity": false,
+          "useTaskDefinitionArtifact": false
+        }
+      ],
+      "name": "Deploy",
+      "refId": "1",
+      "requisiteStageRefIds": [
+        "2"
+      ],
+      "type": "deploy"
+    },
+    {
+      "cloudProvider": "ecs",
+      "cloudProviderType": "ecs",
+      "imageLabelOrSha": "index.docker.io/library/nginx:${parameters.testVar}",
+      "name": "Find Image from Tags",
+      "refId": "2",
+      "requisiteStageRefIds": [],
+      "type": "findImageFromTags"
+    }
+  ],
+  "triggers": [],
+  "updateTs": "1574176239000"
+}
